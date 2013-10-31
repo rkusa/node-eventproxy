@@ -1,0 +1,25 @@
+{
+  "name": "node-eventproxy",
+  "author": {
+    "name": "Markus Ast",
+    "email": "npm.m@rkusa.st"
+  },
+  "version": "0.1.0",
+  "homepage": "https://github.com/rkusa/node-eventproxy",
+  "scripts": {
+    "start": "node app",
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "1.13.x",
+    "chai": "1.8.x"
+  },
+  "bugs": "https://github.com/rkusa/node-eventproxy/issues",
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/rkusa/node-eventproxy.git"
+  },
+  "engines": {
+    "node": ">=0.8"
+  }
+}
