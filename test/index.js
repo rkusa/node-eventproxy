@@ -44,7 +44,7 @@ suite('Proxy', function() {
     expect(obj._events).to.include.keys('event1')
     expect(obj._events.event1).to.have.lengthOf(2)
     obj.removeListener('event1', fn)
-    expect(obj._events).to.not.include.keys('event1')
+    expect(obj._events.event).to.be.undefined
   })
   test('Unbinding indirect functions', function() {
     function Constructor() {}
@@ -55,6 +55,6 @@ suite('Proxy', function() {
     obj.on('event1', proxy(c, 'doSomething'))
     expect(obj._events).to.include.keys('event1')
     obj.removeListener('event1', c.doSomething)
-    expect(obj._events).to.not.include.keys('event1')
+    expect(obj._events.event).to.be.undefined
   })
 })
