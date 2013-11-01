@@ -5,6 +5,7 @@
     "email": "npm.m@rkusa.st"
   },
   "version": "0.1.0",
+  "main": "lib/",
   "homepage": "https://github.com/rkusa/node-eventproxy",
   "scripts": {
     "start": "node app",
