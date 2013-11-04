@@ -6,7 +6,7 @@ Takes a function and returns a new one that has the provided context and argumen
 
 ```json
 { "name": "node-eventproxy",
-  "version": "0.1.1" }
+  "version": "0.2.0" }
 ```
 
 This method is useful for binding a context and arguments to a function that is attached to a Node's [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter). It thereby assures that even if you bind the function returned from node-eventproxy it will still unbind the correct function if passed the original one.
@@ -17,6 +17,7 @@ This method is useful for binding a context and arguments to a function that is 
 
 ```js
 var proxy = require('node-eventproxy')
+proxy.enable(require('events').EventEmitter)
 obj.on('event', proxy(fn, context))
 obj.removeListener('event', fn)
 ```

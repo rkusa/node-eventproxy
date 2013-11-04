@@ -2,6 +2,8 @@ var expect = require('chai').expect
   , EventEmitter = require('events').EventEmitter
   , proxy = require('../lib')
 
+proxy.enable(EventEmitter)
+
 suite('Proxy', function() {
   test('Events', function() {
     var obj = new EventEmitter
