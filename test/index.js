@@ -84,7 +84,8 @@ suite('Proxy', function() {
     obj.once('removed', proxy(obj, 'removeListener', obj, 'event1', proxy(c, 'doSomething')))
     expect(obj._events).to.include.keys('event1', 'removed')
     obj.emit('removed')
-    expect(obj._events).to.not.include.keys('event1', 'removed')
+    expect(obj._events.event1).to.be.undefined
+    expect(obj._events.removed).to.be.undefined
   })
   test('Trying to bind non existing indirect function should throw', function() {
     expect(proxy.bind(null, {}, 'method')).to.throw('Object does not contain method `method`.')
