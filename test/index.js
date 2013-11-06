@@ -46,7 +46,7 @@ suite('Proxy', function() {
     expect(obj._events).to.include.keys('event1')
     expect(obj._events.event1).to.have.lengthOf(2)
     obj.removeListener('event1', fn)
-    expect(obj._events.event).to.be.undefined
+    expect(obj._events.event1).to.be.undefined
   })
   test('Unbinding indirect functions', function() {
     function Constructor() {}
@@ -57,6 +57,36 @@ suite('Proxy', function() {
     obj.on('event1', proxy(c, 'doSomething'))
     expect(obj._events).to.include.keys('event1')
     obj.removeListener('event1', c.doSomething)
-    expect(obj._events.event).to.be.undefined
+    expect(obj._events.event1).to.be.undefined
+  })
+  test('Unbind target', function() {
+    function Constructor() {}
+    Constructor.prototype.doSomething1 = function() {}
+    Constructor.prototype.doSomething2 = function() {}
+
+    var c = new Constructor
+      , obj = new EventEmitter
+    obj.on('event1', proxy(c, 'doSomething1'))
+    obj.on('event1', proxy(c, 'doSomething2'))
+    expect(obj._events).to.include.keys('event1')
+    expect(obj._events.event1).to.have.lengthOf(2)
+    obj.removeListener('event1', c)
+    expect(obj._events.event1).to.be.undefined
+  })
+  test('Event for unbinding indirect functions', function() {
+    function Constructor() {}
+    Constructor.prototype.doSomething = function() {}
+
+    var c = new Constructor
+      , obj = new EventEmitter
+
+    obj.on('event1', proxy(c, 'doSomething'))
+    obj.once('removed', proxy(obj, 'removeListener', obj, 'event1', proxy(c, 'doSomething')))
+    expect(obj._events).to.include.keys('event1', 'removed')
+    obj.emit('removed')
+    expect(obj._events).to.not.include.keys('event1', 'removed')
+  })
+  test('Trying to bind non existing indirect function should throw', function() {
+    expect(proxy.bind(null, {}, 'method')).to.throw('Object does not contain method `method`.')
   })
 })
