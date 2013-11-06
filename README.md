@@ -11,8 +11,6 @@ Takes a function and returns a new one that has the provided context and argumen
 
 This method is useful for binding a context and arguments to a function that is attached to a Node's [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter). It thereby assures that even if you bind the function returned from node-eventproxy it will still unbind the correct function if passed the original one.
 
-**Attention:** This module extends the behaviour of [`EventEmitter.prototype.removeListener`](http://nodejs.org/api/events.html#events_emitter_removelistener_event_listener).
-
 ## Usage
 
 ```js
@@ -22,7 +20,20 @@ obj.on('event', proxy(fn, context))
 obj.removeListener('event', fn)
 ```
 
+To not overwrite `EventEmitter.prototype.removeListener` directly, a better practise would be:
+
+```js
+var util = require('util')
+  , proxy = require('node-eventproxy')
+util.inherits(MyEventEmitter, require('events').EventEmitter)
+proxy.enable(MyEventEmitter)
+```
+
 ## API
+
+### proxy.enable(constructor)
+
+Extends the behaviour of `constructor.prototype.removeListener`.
 
 ### proxy(fn, [context], [args...])
 
