@@ -87,7 +87,4 @@ suite('Proxy', function() {
     expect(obj._events.event1).to.be.undefined
     expect(obj._events.removed).to.be.undefined
   })
-  test('Trying to bind non existing indirect function should throw', function() {
-    expect(proxy.bind(null, {}, 'method')).to.throw('Object does not contain method `method`.')
-  })
 })
